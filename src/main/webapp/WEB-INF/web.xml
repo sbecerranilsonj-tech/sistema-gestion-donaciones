@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    
+    <display-name>Sistema de Donaciones</display-name>
+    
+    <description>
+        Sistema de gestión de donantes con JSP, Servlets y MySQL.
+    </description>
+    
+    <!-- Página de inicio predeterminada -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>inicio</welcome-file>
+    </welcome-file-list>
+    
+    <!-- Filtro para codificación UTF-8 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- La configuración de los servlets de la aplicación se realiza mediante anotaciones @WebServlet. -->
+    <!-- No es necesario definirlos aquí. -->
+    
+    <!-- ============================================
+         CONFIGURACIÓN DE RECURSOS ESTÁTICOS
+         ============================================ -->
+    <!-- Mapeo de archivos estáticos para el default servlet -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.ico</url-pattern>
+    </servlet-mapping>
+
+    <!-- ============================================
+         CONFIGURACIÓN DE SESIÓN
+         ============================================ -->
+    
+    <session-config>
+        <session-timeout>20</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure> <!-- Cambiar a true en producción si se usa HTTPS -->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+    
+    <!-- ============================================
+         PÁGINAS DE ERROR PERSONALIZADAS
+         ============================================ -->
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/inicio</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/inicio</location>
+    </error-page>
+    
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/inicio</location>
+    </error-page>
+    
+    <!-- ============================================
+         CONFIGURACIÓN DE SEGURIDAD (OPCIONAL)
+         ============================================ -->
+    
+    <!-- Prevenir acceso directo a archivos JSP en WEB-INF -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected JSPs</web-resource-name>
+            <url-pattern>/WEB-INF/views/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+</web-app>
